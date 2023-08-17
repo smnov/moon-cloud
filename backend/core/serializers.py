@@ -13,9 +13,8 @@ class FileSerializer(serializers.ModelSerializer):
     BASE_DIR = settings.BASE_DIR
 
     def get_name(self, obj):
-        if obj.file:
-            return obj.file.name
-        return 'default'
+        print(obj)
+        return obj.file.name
     
     def change_slashes_in_path(self, path):
         '''Repair path'''

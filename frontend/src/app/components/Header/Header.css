@@ -1,0 +1,8 @@
+.nav {
+  @apply bg-white border-gray-200 border-b
+
+}
+
+.wrapper {
+  @apply max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4
+}

@@ -21,15 +21,16 @@ class FilesViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
     
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+        serializer = self.get_serializer(data=request.data, many=False)
         if serializer.is_valid():
-            return Response(serializer.data, status=status.HTTP_201_created)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def get_queryset(self):
         return File.objects.filter(user=self.request.user)
 
 class FileViewSet(viewsets.ModelViewSet):
-    queryset = File.objects.get()
+    queryset = File.objects.all()
     serializer_class = FileSerializer(many=False)
     permission_classes = [IsAuthenticated]
 
@@ -38,7 +39,7 @@ class FileViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
     
     def get_queryset(self):
-        return File.objects.filter(user=self.request.user, id=self.kwargs['pk'])
+        return File.objects.filter(user=self.request.user, id=self.request.pk)
 
 class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
